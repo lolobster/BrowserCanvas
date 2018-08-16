@@ -1,0 +1,8 @@
+{
+	"name": "DoodleCanvas",
+	"description": "Collaborative drawing canvas",
+	"dependencies": {
+		"express": "4.x",
+		"socket.io": "*"
+	}
+}
