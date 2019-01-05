@@ -9,10 +9,10 @@ const colors = {
     green: "\x1b[32m",
     cyan: "\x1b[36m",
     yellow: "\x1b[33m"
-}
+};
 
-let server = http.createServer(app);
-let io = socketIo.listen(server);
+var server = http.createServer(app);
+var io = socketIo.listen(server);
 server.listen(8080);
 
 app.use(express.static(__dirname + '/public'));
@@ -28,12 +28,22 @@ io.on('connection', function (socket) {
     }
 
     socket.on('draw_line', function(data) {
-        console.log(colors.yellow, "x:", data.line[0].x, "y:", data.line[0].y);
+        console.log(colors.yellow, 
+            "x:", data.line[0].x, 
+            "y:", data.line[0].y);
 
         // Add received line to history
         line_history.push(data.line);
 
+        if (line_history.length >= 50){
+            line_history.shift();
+        }
         // Send line to all clients
         io.emit('draw_line', { line: data.line });
+    });
+
+    socket.on('disconnect', function() {
+        console.log(colors.red, "User disconnected");
+        io.emit('User disconnected');
     });
 });

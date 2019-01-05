@@ -1,7 +1,5 @@
-const io = require('socket.io-client');
-
 document.addEventListener("DOMContentLoaded", function() {
-    let mouse = {
+    var mouse = {
         click: false,
         move: false,
         pos: {x:0, y:0},
@@ -9,11 +7,13 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     // Get canvas element and create context
-    var canvas = document.getElementById('drawing');
-    var context = canvas.getContext('2d');
+    var canvas = document.getElementById("drawing");
+    var context = canvas.getContext("2d");
+    context.strokeStyle = "#FF0000";
+    context.lineWidth = 4;
     var width = window.innerWidth;
     var height = window.innerHeight;
-    let socket = io.connect();
+    var socket = io.connect();
 
     // Set canvas to full browser width/height
     canvas.width = width;
@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Draw line received from server
     socket.on('draw_line', function(data) {
-        let line = data.line;
+        var line = data.line;
         context.beginPath();
         context.moveTo(line[0].x * width, line[0].y * height);
-        context.moveTo(line[1].x * width, line[1].y * height);
+        context.lineTo(line[1].x * width, line[1].y * height);
         context.stroke();
     });
 
