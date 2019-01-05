@@ -2,6 +2,7 @@
 	"name": "DoodleCanvas",
 	"description": "Collaborative drawing canvas",
 	"dependencies": {
+		"console-stamp": "^0.2.7",
 		"express": "4.x",
 		"socket.io": "*"
 	}
